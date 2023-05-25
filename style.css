@@ -10,8 +10,8 @@ header{
     position: relative;
 }
 #click{
-    margin-left: 100px;
-    margin-top: 50px;
+    margin-left: 5px;
+    margin-top: 5px;
     padding: 200px;
     align-items: center;
     background-color: red;
