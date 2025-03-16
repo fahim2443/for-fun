@@ -2,16 +2,143 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Tutorial</title>
-    <link rel="stylesheet" href="style.css">
+    <title>AI Museum Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="https://unpkg.com/@google/model-viewer@latest"></script>
 </head>
-<body>
-    <script src="index.js" type="Module"></script>
-    <header>
-        <button id="click" onclick="alert('Fuck you')">Crush me</button>
+<body class="bg-white text-black dark:bg-gray-900 dark:text-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md p-4 flex justify-between items-center dark:bg-gray-800">
+        <h1 class="text-2xl font-bold">AI Museum Guide</h1>
+        <ul class="flex space-x-4">
+            <li><a href="index.html" class="hover:text-blue-500">Home</a></li>
+            <li><a href="pages/virtual-tour.html" class="hover:text-blue-500">Virtual Tour</a></li>
+            <li><a href="pages/lessons.html" class="hover:text-blue-500">Lessons</a></li>
+        </ul>
+        <!--
+        <button id="theme-toggle" class="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded text-xl">
+            🌙
+        </button>
+        -->
+    </nav>
+
+    <!-- 3D Model and Chatbot Section -->
+    <section class="container mx-auto py-12 px-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 3D Model Container -->
+        <div class="bg-blue-100 p-6 rounded-lg shadow-md text-black dark:bg-gray-900 dark:text-gray-100 text-center">
+            <h3 class="text-xl font-bold">Explore the 3D Model</h3>
+            <p class="mt-2">Interact with an ancient artifact in 3D.</p>
+            <div class="mt-4">
+                <!-- Placeholder for 3D Model -->
+                <model-viewer src="assets/model.glb" alt="Ancient Artifact" auto-rotate camera-controls class="w-full h-64"></model-viewer>
+            </div>
+        </div>
+
+        <!-- Chatbot Container -->
+        <div class="bg-blue-100 p-6 rounded-lg shadow-md text-black dark:bg-gray-900 dark:text-gray-100 text-center">
+            <h3 class="text-xl font-bold">AI Chatbot Guide</h3>
+            <p class="mt-2">Ask questions about the museum and its history.</p>
+            <div class="mt-4 border p-4 h-64 overflow-auto">
+                <div id="chatbox" class="text-left text-sm"></div>
+                <input type="text" id="userInput" placeholder="Ask me anything..." class="w-full mt-2 p-2 border rounded">
+                <button onclick="sendMessage()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <header class="text-center py-16 bg-blue-600 text-white">
+        <h2 class="text-4xl font-bold">Welcome to the Virtual Nanjing Museum</h2>
+        <p class="mt-4">Explore the rich history of China through an interactive digital experience.</p>
     </header>
-   
+
+    <!-- Features Section -->
+    <section class="container mx-auto py-12 px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-blue-100 p-6 rounded-lg shadow-md text-black dark:bg-gray-900 dark:text-gray-100 text-center">
+            <h3 class="text-xl font-bold">Virtual Tour</h3>
+            <p class="mt-2">Experience historical sites in an interactive way.</p>
+        </div>
+        <div class="bg-blue-100 p-6 rounded-lg shadow-md text-black dark:bg-gray-900 dark:text-gray-100 text-center">
+            <h3 class="text-xl font-bold">User Manual</h3>
+            <p class="mt-2">Learn how to explore the Nanjing Museum virtually using this guide.</p>
+        </div>
+    </section>
+
+    <!-- Manual Guideline Section -->
+    <section class="container mx-auto py-12 px-6">
+        <h2 class="text-3xl font-bold text-center">How to Use the AI Museum Guide</h2>
+        <p class="mt-4 text-center">Follow these steps to explore the virtual Nanjing Museum:</p>
+        <div class="mt-6 space-y-4">
+            <div class="bg-blue-100 p-6 rounded-lg shadow-md text-black dark:bg-gray-900 dark:text-gray-100">
+                <h3 class="text-xl font-bold">1. Explore 3D Artifacts</h3>
+                <p class="mt-2">Use the interactive 3D viewer to rotate and zoom in on historical artifacts.</p>
+            </div>
+            <div class="bg-blue-100 p-6 rounded-lg shadow-md text-black dark:bg-gray-900 dark:text-gray-100">
+                <h3 class="text-xl font-bold">2. Ask the AI Guide</h3>
+                <p class="mt-2">Use the chatbot to ask questions about exhibits, history, and artifacts.</p>
+            </div>
+            <div class="bg-blue-100 p-6 rounded-lg shadow-md text-black dark:bg-gray-900 dark:text-gray-100">
+                <h3 class="text-xl font-bold">3. Learn About Nanjing Museum</h3>
+                <p class="mt-2">Read detailed descriptions and historical insights about Nanjing Museum exhibits.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 bg-white text-black dark:bg-gray-800 dark:text-gray-100">
+        <p>&copy; 2025 AI Museum Guide. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            function updateTheme(theme) {
+                console.log("Applying theme:", theme); // Debugging log
+
+                if (theme === "dark") {
+                    body.classList.add("dark");
+                    /* Commenting out light mode settings for now */
+                    // body.classList.remove("bg-white", "text-black");
+                    body.classList.add("bg-gray-900", "text-gray-100");
+                    // toggleButton.textContent = "☀️"; // Sun icon for dark mode
+                } 
+                /*
+                else {
+                    body.classList.remove("dark");
+                    body.classList.remove("bg-gray-900", "text-gray-100");
+                    body.classList.add("bg-white", "text-black");
+                    toggleButton.textContent = "🌙"; // Moon icon for light mode
+                }
+                */
+
+                localStorage.setItem("theme", theme);
+            }
+
+            // Ensure theme is correctly applied on page load
+            let storedTheme = localStorage.getItem("theme");
+            if (storedTheme === "dark") {
+                updateTheme("dark");
+            } 
+            /* 
+            else {
+                updateTheme("light");
+            }
+            */
+
+            /*
+            toggleButton.addEventListener("click", () => {
+                const currentTheme = body.classList.contains("dark") ? "light" : "dark";
+                updateTheme(currentTheme);
+            });
+            */
+        });
+    </script>
+
+    <!-- Hidden div to ensure Tailwind includes necessary classes -->
+    <div class="hidden bg-white text-black bg-gray-900 text-gray-100"></div>
 </body>
 </html>
